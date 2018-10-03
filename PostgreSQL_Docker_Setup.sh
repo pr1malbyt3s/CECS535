@@ -20,6 +20,16 @@ sleep 3
 echo -e "${GREEN}You will be prompted for new PostgreSQL password for user postgres.${NC}"
 docker exec -it postgresql_playground psql -U postgres -c "\password postgres"
 
+#Download and install PostgreSQL client.
+##Add PostgreSQL APT respository.
+echo "deb http://apt.postgresql.org/pub/repos/apt/ stretch-pgdg main" > /etc/apt/sources.list.d/pgdg.list
+##Import repository signing key.
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+##Update system.
+apt update
+##Install client software for PostgreSQL.
+apt-get install postgresql-client-10
+
 #Setup finished. Inform user.
 echo -e "${GREEN}PostgreSQL Docker container setup complete!${NC}"
 echo -e "${GREEN}You can access your database at localhost port 5342.${NC}"
