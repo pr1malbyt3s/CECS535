@@ -33,3 +33,4 @@ apt-get -y install postgresql-client-10
 #Setup finished. Inform user.
 echo -e "${GREEN}PostgreSQL Docker container setup complete!${NC}"
 echo -e "${GREEN}You can access your database at localhost port 5342.${NC}"
+echo -e "${GREEN}Use the command 'psql -h localhost -p 5432 -U postgres' to do so.${NC}"
