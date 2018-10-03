@@ -28,7 +28,7 @@ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-
 ##Update system.
 apt update
 ##Install client software for PostgreSQL.
-apt-get install postgresql-client-10
+apt-get -y install postgresql-client-10
 
 #Setup finished. Inform user.
 echo -e "${GREEN}PostgreSQL Docker container setup complete!${NC}"
