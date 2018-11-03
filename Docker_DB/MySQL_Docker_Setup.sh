@@ -14,21 +14,21 @@ sleep 2
 docker rm mysql_meadow >/dev/null 2>&1
 
 #Prompt user for MySQL root password to be used, as it is required for container startup.
-#echo -e "${GREEN}Please follow credentials prompt for database setup.${NC}"
-#while true
-#do
-#	read -sp 'Enter MySQL root password: ' mysqlpass
-#	echo
-#	read -sp 'Please enter MySQL root password again: ' mysqlpass2
-#	echo
-#	[ "$mysqlpass" = "$mysqlpass2" ] && break
-#	echo 'Passwords do not match. Please try again.'
-#	echo
-#done
+echo -e "${GREEN}Please follow credentials prompt for database setup.${NC}"
+while true
+do
+	read -sp 'Enter MySQL root password: ' mysqlpass
+	echo
+	read -sp 'Please enter MySQL root password again: ' mysqlpass2
+	echo
+	[ "$mysqlpass" = "$mysqlpass2" ] && break
+	echo 'Passwords do not match. Please try again.'
+	echo
+done
 
 #Initialize MySQL container, link localhost port to docker port and give time for container to start.
 echo -e "${GREEN}Starting MySQL container.${NC}"
-docker run --name mysql_meadow -e MYSQL_ALLOW_EMPTY_PASSWORD=yes --restart=always -d -p 127.0.0.1:3306:3306 mysql
+docker run --name mysql_meadow -e MYSQL_ROOT_PASSWORD=$mysqlpass --restart=always -d -p 127.0.0.1:3306:3306 mysql
 sleep 3
 
 #Install MySQL client.
