@@ -28,7 +28,7 @@ done
 
 #Initialize MySQL container, link localhost port to docker port and give time for container to start.
 echo -e "${GREEN}Starting MySQL container.${NC}"
-docker run --name mysql_meadow -e MYSQL_ROOT_PASSWORD=$mysqlpass --restart=always -d -p 127.0.0.1:3306:3306 mysql
+docker run --name mysql_meadow -e MYSQL_ROOT_PASSWORD=$mysqlpass --restart=always -d -p 127.0.0.1:3306:3306 mysql:latest
 sleep 3
 
 #Install MySQL client.
