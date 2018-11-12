@@ -7,6 +7,10 @@
 GREEN='\033[0;32m'
 NC='\033[0m'
 
+#Download MySQL docker image.
+echo -e "${GREEN}Downloading MySQL Docker image.${NC}"
+docker pull mysql > /dev/null 2>&1
+
 #Ensure container not already running.
 echo -e "${GREEN}Ensuring MySQL container not already running.${NC}"
 docker stop mysql_meadow > /dev/null 2>&1
@@ -28,8 +32,8 @@ done
 
 #Initialize MySQL container, link localhost port to docker port and give time for container to start.
 echo -e "${GREEN}Starting MySQL container.${NC}"
-docker run --name mysql_meadow -e MYSQL_ROOT_PASSWORD=$mysqlpass --restart=always -d -p 127.0.0.1:3306:3306 mysql:latest
+docker run --name mysql_meadow -e MYSQL_ROOT_PASSWORD=$mysqlpass --restart=always -d -p 127.0.0.1:3306:3306 mysql
 sleep 3
 
 #Install MySQL client.
-apt-get install mysql-client -y
+apt-get install mysql-client -y > /dev/null 2>&1
