@@ -85,7 +85,25 @@ FOR EACH ROW
 DELIMITER ;
 
 /* 4. Insert at least five tuples into each relation. */
+INSERT INTO HOTEL VALUES
+	(1000, 7006, 'Peppermill Road', 'Augusta', 30909, 'Bob Costas', 48, TRUE, FALSE, FALSE);
 
+INSERT INTO ROOM VALUES
+	('regular', 1, 1, 'full', 100),
+	('extra', 2, 2, 'full', 110),
+	('suite', 3, 2, 'queen', 120),
+	('business', 4, 2, 'king', 140),
+	('luxury', 5, 3, 'king', 160),
+	('family', 5, 3, 'queen', 175);
+
+INSERT INTO ROOMHOTEL VALUES
+	(1000, 'regular', 28);
+
+INSERT INTO CUSTOMER VALUES
+	(1000, 'Drew Carey', 'Hollywood Boulevard', 'Beverly Hills', 90210, 'gold');
+
+INSERT INTO RESERVATION VALUES
+	(1000, 1000, "regular", '2018-11-13', '2018-11-14', '1234432156788765', '2020-06-30');
 
 /* 5. Create the CUSTPROFILE table. */
 
