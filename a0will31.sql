@@ -61,9 +61,25 @@ DELIMITER $$
 CREATE TRIGGER verify_room_insertion BEFORE INSERT ON ROOM
 FOR EACH ROW
 	BEGIN
-		IF (new.type NOT LIKE 'regular' OR new.type NOT LIKE 'extra' OR new.type NOT LIKE 'suite' OR new.type NOT LIKE 'business' OR new.type NOT LIKE 'luxury' OR new.type NOT LIKE 'family') THEN
+		IF (new.type NOT LIKE 'regular' AND new.type NOT LIKE 'extra' AND new.type NOT LIKE 'suite' AND new.type NOT LIKE 'business' AND new.type NOT LIKE 'luxury' AND new.type NOT LIKE 'family') THEN
 			SIGNAL SQLSTATE '45000'
-			SET MESSAGE_TEXT = 'Attempted INSERT does not match valid room type';
+			SET MESSAGE_TEXT = 'Attempted type INSERT does not match valid room type.';
+		END IF;
+		IF (new.occupancy < 1 OR new.occupancy > 5) THEN
+			SIGNAL SQLSTATE '45000'
+			SET MESSAGE_TEXT = 'Attempted occupancy INSERT does not match valid number.';
+		END IF;
+		IF (new.`number-beds` < 1 OR new.`number-beds` > 3) THEN
+			SIGNAL SQLSTATE '45000'
+			SET MESSAGE_TEXT = 'Attempted number-beds INSERT does not match valid number.';
+		END IF;
+		IF (new.`type-beds` NOT LIKE 'queen' AND new.`type-beds` NOT LIKE 'king' AND new.`type-beds` NOT LIKE 'full') THEN
+			SIGNAL SQLSTATE '45000'
+			SET MESSAGE_TEXT = 'Attempted type-beds INSERT does not match valid bed type.';
+		END IF;
+		IF (new.price < 0) THEN
+			SIGNAL SQLSTATE '45000'
+			SET MESSAGE_TEXT = 'Attempted price INSERT is not a positive number.';
 		END IF;
 	END $$
 DELIMITER ;
