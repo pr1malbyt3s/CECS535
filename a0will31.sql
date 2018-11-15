@@ -86,7 +86,11 @@ DELIMITER ;
 
 /* 4. Insert at least five tuples into each relation. */
 INSERT INTO HOTEL VALUES
-	(1000, 7006, 'Peppermill Road', 'Augusta', 30909, 'Bob Costas', 48, TRUE, FALSE, FALSE);
+	(0, 7006, 'Peppermill Road', 'Augusta', 30909, 'Bob Costas', 48, TRUE, FALSE, FALSE),
+	(0, 9343, 'Glenwood Avenue', 'Raleigh', 27606, 'Anne Fristoe', 62, TRUE, TRUE, TRUE),
+      	(0, 1800, 'Rocket Highway', 'Huntsville', 54807, 'Wes Cheplin', 53, FALSE, FALSE, FALSE),
+	(0, 6401, 'Maiden Drive', 'Hickory', 63004, 'Ross Johnson', 30, FALSE, TRUE, TRUE),
+	(0, 378, 'Richmond Hills Road', 'Cleveland', 18425, 'Elyse Beavers', 40, TRUE, FALSE, TRUE);	
 
 INSERT INTO ROOM VALUES
 	('regular', 1, 1, 'full', 100),
@@ -97,13 +101,21 @@ INSERT INTO ROOM VALUES
 	('family', 5, 3, 'queen', 175);
 
 INSERT INTO ROOMHOTEL VALUES
-	(1000, 'regular', 28);
+	(1, 'regular', 28),
+	(1, 'suite', 10),
+	(1, 'extra', 10),
+	(2, 'family', 2),
+	(2, 'regular', 20),
+	(2, 'extra', 20),
+	(2, 'suite', 10),
+	(2, 'business', 5),
+	(2, 'luxury', 5);
 
 INSERT INTO CUSTOMER VALUES
-	(1000, 'Drew Carey', 'Hollywood Boulevard', 'Beverly Hills', 90210, 'gold');
+	(0, 'Drew Carey', 'Hollywood Boulevard', 'Beverly Hills', 90210, 'gold');
 
 INSERT INTO RESERVATION VALUES
-	(1000, 1000, "regular", '2018-11-13', '2018-11-14', '1234432156788765', '2020-06-30');
+	(1, 1, "regular", '2018-11-13', '2018-11-14', '1234432156788765', '2020-06-30');
 
 /* 5. Create the CUSTPROFILE table. */
 
