@@ -109,14 +109,38 @@ INSERT INTO ROOMHOTEL VALUES
 	(2, 'extra', 20),
 	(2, 'suite', 10),
 	(2, 'business', 5),
-	(2, 'luxury', 5);
+	(2, 'luxury', 5),
+	(3, 'extra', 23),
+	(3, 'suite', 20),
+	(3, 'business', 10),
+	(4, 'regular', 10),
+	(4, 'extra', 10),
+	(4, 'suite', 10),
+	(5, 'suite', 20),
+	(5, 'business', 10),
+	(5, 'luxury', 5),
+	(5, 'family', 5);
 
 INSERT INTO CUSTOMER VALUES
-	(0, 'Drew Carey', 'Hollywood Boulevard', 'Beverly Hills', 90210, 'gold');
+	(0, 'Drew Carey', '13 Hollywood Boulevard', 'Beverly Hills', 90210, 'gold'),
+	(0, 'Allison Turner', '17 Miami Boulevard', 'Miami', 33101, 'silver'),
+	(0, 'John Stugotz', '505 5th Avenue', 'New York', 10453, 'business'),
+	(0, 'Roy Bellamy', '431 Firefox Road', 'Nashville', 37027, 'gold'),
+	(0, 'Lee Gore', '7423 Exuma Drive', 'Grovetown', 30905, 'silver'),
+	(0, 'John Cena', '444 Invisible Lane', 'Detroit', 48127, 'business');
 
 INSERT INTO RESERVATION VALUES
-	(1, 1, "regular", '2018-11-13', '2018-11-14', '1234432156788765', '2020-06-30');
+	(1, 1, 'regular', '2018-11-13', '2018-11-14', '1234432156788765', '2020-06-30'),
+	(2, 1, 'extra', '2018-11-20', '2018-11-23', '1234432156788765', '2020-06-30'),
+	(2, 2, 'suite', '2018-11-13', '2018-11-15', '1111222233334444', '2019-03-30'),
+	(3, 2, 'extra', '2018-12-05', '2018-12-15', '1111222233334444', '2019-03-30'),
+	(3, 3, 'business', '2019-01-01', '2019-01-02', '3434121256567878', '2021-05-31'),
+	(4, 4, 'suite', '2018-10-31', '2018-11-03', '9876543223456789', '2018-12-31'),
+	(5, 5, 'luxury', '2018-07-04', '2018-07-14', '1111333355557777', '2019-02-15'),
+	(5, 6, 'family', '2018-07-04', '2018-07-14', '2222444466668888', '2020-09-30');
 
 /* 5. Create the CUSTPROFILE table. */
+CREATE TABLE CUSTPROFILE SELECT `cust-id`, `begin-date` AS `latest-stay`
+FROM RESERVATION;
 
 /* 6. Create the FAVORITE view. */
