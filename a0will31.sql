@@ -1,8 +1,8 @@
-/* 1. Create database titled a0will31CECSProject. */
-CREATE DATABASE a0will31CECSProject;
-USE a0will31CECSProject;
+/* 1. Create database titled a0will31CECS535Project.  */
+CREATE DATABASE a0will31CECS535Project;
+USE a0will31CECS535Project;
 
-/* 2. Insert tables into databse. */
+/* 2. Create tables for the database. */
 CREATE TABLE HOTEL (
 	hotelid			INT		AUTO_INCREMENT		PRIMARY KEY,
 	number			INT,
@@ -58,7 +58,8 @@ CREATE TABLE RESERVATION (
 	FOREIGN KEY(hotelid,`room-type`) REFERENCES ROOMHOTEL(hotelid,`room-type`)
 );
 
-/* 3. Create a trigger to ensure that all values in the tuple are as described. If not, the insertion will be rejected */
+/* 3. Create a trigger to ensure that all values for tuples inserted into the ROOM relation are as specified. 
+This trigger checks before each insertion and if criteria not met, the insertion will be rejected. */
 DELIMITER $$
 CREATE TRIGGER verify_room_insertion BEFORE INSERT ON ROOM
 FOR EACH ROW
@@ -146,13 +147,15 @@ INSERT INTO RESERVATION VALUES
 	(2, 6, 'family', '2018-09-01', '2018-09-03', '2222444466668888', '2020-09-30'),
 	(5, 6, 'family', '2018-07-04', '2018-07-14', '2222444466668888', '2020-09-30');
 
-/* 5. Create the CUSTPROFILE table and create a trigger for insertions and updates on RESERVATION. */
+/* 5. Create the CUSTPROFILE. For each customer, this relation gives the most recent reservation made for each customer, along with the total amount of money spent by that customer on hotels. */
 CREATE TABLE CUSTPROFILE SELECT `cust-id`, MAX(`begin-date`) AS `latest-stay`, SUM(DATEDIFF(`end-date`,`begin-date`) * ROOM.price) AS total
 FROM RESERVATION AS R1
 JOIN ROOM ON ROOM.type=R1.`room-type`
 GROUP BY `cust-id`
 ORDER BY `cust-id`;
 
+/*Create the trigger that updates the CUSTPROFILE table after insertions on the RESERVATION relation.
+This trigger updates the `lastest-stay` and total for each customer in the CUSTPROFILE table.*/
 DELIMITER $$
 CREATE TRIGGER reservation_insert AFTER INSERT ON RESERVATION
 FOR EACH ROW
@@ -167,6 +170,8 @@ FOR EACH ROW
 END$$
 DELIMITER ;
 
+/*Create the trigger that updates the CUSTPROFILE table after updates on the RESERVATION relation.
+This trigger updates the `latest-stay` and total for each customer in the CUSTPROFILE table.*/
 DELIMITER $$
 CREATE TRIGGER reservation_update AFTER UPDATE ON RESERVATION
 FOR EACH ROW
@@ -181,28 +186,12 @@ FOR EACH ROW
 END$$
 DELIMITER ;
 
-/* 6. Create the FAVORITE view. */
+/* 6. Create the FAVORITE view. This view gives the favorite hotelid for each `cust-id` based on the total of nights stayed in each hotel.
+This view is created by checking if the total amount of nights stayed in a hotel by a customer matches the maximum aggregate of nights for each customer.*/
 CREATE VIEW FAVORITE AS
-SELECT *
-FROM 
-	(SELECT `cust-id`, hotelid, SUM(DATEDIFF(`end-date`,`begin-date`)) AS night_sum
-	FROM RESERVATION
-	GROUP BY `cust-id`, hotelid
-	) AS R1;
-	/*GROUP BY `cust-id`,hotelid);*/
-	
-	
-/*SELECT R1.`cust-id`, R1.hotelid, SUM(DATEDIFF(R1.`end-date`,R1.`begin-date`))
-FROM RESERVATION AS R1
-JOIN RESERVATION AS R2 
-WHERE R2.`cust-id`=R1.`cust-id` AND R2.hotelid=R1.hotelid
-GROUP BY R1.`cust-id`,R1.hotelid;
-
-SELECT `cust-id`, MAX(night_sum)
-FROM
-(
-SELECT `cust-id`, hotelid, SUM(DATEDIFF(`end-date`,`begin-date`)) AS night_sum
+SELECT `cust-id`, hotelid AS `hotel-id`
 FROM RESERVATION
-GROUP BY `cust-id`, hotelid
-) AS R1
-GROUP BY `cust-id`;*/
+WHERE (`cust-id`, DATEDIFF(`end-date`, `begin-date`)) IN
+(SELECT `cust-id`, MAX(DATEDIFF(`end-date`, `begin-date`))
+FROM RESERVATION
+GROUP BY `cust-id`);
