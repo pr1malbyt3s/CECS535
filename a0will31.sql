@@ -8,9 +8,9 @@ CREATE TABLE HOTEL (
 	number			INT,
 	street			VARCHAR(30),
 	city			VARCHAR(20),
-	zip				INT,
-	`manager-name`	VARCHAR(20),
-	`number-rooms`	INT,
+	zip			INT,
+	`manager-name`		VARCHAR(20),
+	`number-rooms`		INT,
 	`has-pool`		BOOL,
 	`has-bar`		BOOL,
 	`has-restaurant`	BOOL
@@ -19,7 +19,7 @@ CREATE TABLE HOTEL (
 CREATE TABLE ROOM (
 	type			VARCHAR(10)	PRIMARY KEY,
 	occupancy		INT,
-	`number-beds`	INT,
+	`number-beds`		INT,
 	`type-beds`		VARCHAR(5),
 	price			INT	
 );
@@ -30,7 +30,7 @@ CREATE TABLE ROOMHOTEL (
 	number			INT,
 	PRIMARY KEY(hotelid,`room-type`),
 	FOREIGN KEY(hotelid) REFERENCES HOTEL(hotelid),
-    FOREIGN KEY(`room-type`) REFERENCES ROOM(type)
+    	FOREIGN KEY(`room-type`) REFERENCES ROOM(type)
 );
 
 CREATE TABLE CUSTOMER (
@@ -39,7 +39,7 @@ CREATE TABLE CUSTOMER (
 	number			INT,
 	street			VARCHAR(30),
 	city			VARCHAR(20),
-	zip				INT,
+	zip			INT,
 	status			VARCHAR(8)	
 );
 
